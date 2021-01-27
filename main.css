@@ -2,36 +2,124 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
 }
 
 :root {
   font-size: 62.5%;
 }
 
-main {
-  width: 95%;
+/* ====================================================
+ * Modal
+ * ==================================================== */
+
+.modal-hiding {
+  display: none;
+}
+
+.modal-showing {
+  /* Positioning */
+  position: fixed;
+
+  /* Display & Box Model */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 100vh;
-  margin: 0 auto;
+  width: 100%;
+
+  /* Other */
+  background: hsla(0, 1%, 99%, 0.9);
+}
+
+.modal-modalContent {
+  /* Display & Box Model */
+  width: 50%;
+  border-radius: .2rem;
+
+  /* Other */
+  background: hsl(0, 10%, 90%);
+}
+
+.modal-modalHeader {
+  /* Display & Box Model */
+  padding: 1rem;
+  border-bottom: 0.1rem dashed black;
+
+  /* Other */
+  text-align: center;
+}
+
+.button {
+  /* Display & Box Model*/
+  width: 50%;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: .5rem;
+
+  /* Other */
+  background: hsl(200, 50%, 50%);
+  text-align: center;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+main {
+  /* Display & Box Model */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 95%;
+  height: 100vh;
+  margin: 0 auto;
 }
 
+/* ====================================================
+ * Board Header
+ * ==================================================== */
+.scoreboard-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.scoreboard-label {
+  display: block;
+}
+
+/* ====================================================
+ * Table
+ * ==================================================== */
 table {
+  /* Display & Box Model */
   margin-top: 3rem;
-  border: 1px solid black;
-}
 
-tr {
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid black;
+  /* Other */
+  font-size: 5rem;
+  /* !!!! Allows for no spacing between table elements !!!! */
+  border-collapse: collapse;
 }
 
 td {
-  width: 3rem;
-  height: 3rem;
-  border: 1px solid black;
+  /* Display & Box Model */
+  height: 10rem;
+  width: 10rem;
+
+  /* Other */
   text-align: center;
+}
+
+td:first-child {
+  border-right: 2px solid red;
+}
+
+td:last-child {
+  border-left: 2px solid red;
+}
+
+tr:nth-child(2) td {
+  border-top: 2px solid red;
+  border-bottom: 2px solid red;
 }
