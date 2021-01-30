@@ -26,33 +26,61 @@
       <header class="board-boardHeader">
         <h1>Tic Tac Toe</h1>
         <div class="scoreboard">
-          <div class="scoreboard-row">
-            <div class="scoreboard-rowContainer">
-              <label class="scoreboard-label"
-                     for="playerOne">
-                     Player One
-              </label>
-              <input id="playerOne"
-                     class="scoreboard-input"
-                     placeholder="Player 1"
-                     type="text">
-              <span class="playerOneName"></span>
-            </div>
-            <div class="scoreboard-rowContainer">
-              <label class="scoreboard-label"
-                     for="playerTwo">
-                     Player Two
-              </label>
-              <input id="playerTwo"
-                     class="scoreboard-input"
-                     placeholder="Player 2"
-                     type="text">
-              <span class="playerTwoName"></span>
+          <div class="scoreboard-playerSelect">
+            <div class="scoreboard-row">
+              <fieldset>
+                <legend>Do you want to play against a:</legend>
+                <input id="human"
+                       name="opponent"
+                       type="radio"
+                       value="human">
+                <label for="human">Human</label>
+                <input id="computer"
+                       name="opponent"
+                       type="radio"
+                       value="computer">
+                <label for="computer">Computer</label>
+              </fieldset>
             </div>
           </div>
-          <div class="scoreboard-row">
-            <div class="button">
-              Start Game
+          <div class="scoreboard-input scoreboard-input-hiding">
+            <div class="scoreboard-row">
+              <div class="scoreboard-rowContainer">
+                <label class="scoreboard-label"
+                      for="playerOne">
+                      Player One
+                </label>
+                <input id="playerOne"
+                      class="scoreboard-input"
+                      placeholder="Player 1"
+                      type="text">
+              </div>
+              <div class="scoreboard-rowContainer">
+                <label class="scoreboard-label"
+                      for="playerTwo">
+                      Player Two
+                </label>
+                <input id="playerTwo"
+                      class="scoreboard-input"
+                      placeholder="Player 2"
+                      type="text">
+              </div>
+            </div>
+            <div class="scoreboard-row">
+              <div class="button">
+                Start Game
+              </div>
+            </div>
+          </div>
+          <div class="scoreboard-active scoreboard-active-hiding">
+            <div class="scoreboard-row">
+              <span class="playerOneName"></span>
+              <span class="playerTwoName"></span>
+            </div>
+            <div class="scoreboard-row">
+              <div class="button">
+                Restart
+              </div>
             </div>
           </div>
         </div>

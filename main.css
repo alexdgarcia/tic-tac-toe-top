@@ -59,6 +59,8 @@
 
   /* Other */
   background: hsl(200, 50%, 50%);
+  font-size: 1.6rem;
+  color: hsl(0, 1%, 100%);
   text-align: center;
 }
 
@@ -75,18 +77,66 @@ main {
   width: 95%;
   height: 100vh;
   margin: 0 auto;
+
+  border: 1px solid purple;
 }
 
 /* ====================================================
  * Board Header
  * ==================================================== */
+.board-boardHeader {
+  width: 80%;
+}
+
+.board-boardHeader h1 {
+  text-align: center;
+}
+
 .scoreboard-row {
   display: flex;
   justify-content: space-between;
 }
 
+.scoreboard-rowContainer {
+  padding: 1rem;
+}
+
 .scoreboard-label {
   display: block;
+}
+
+.scoreboard-input {
+  display: block;
+}
+
+.scoreboard-input-hiding {
+  display: none;
+}
+
+.scoreboard-active {
+  display: block;
+}
+
+.scoreboard-active-hiding {
+  display: none;
+}
+
+.scoreboard-playerSelect {
+  display: block;
+}
+
+.scoreboard-playerSelect-hiding {
+  display: none;
+}
+
+fieldset {
+  width: 100%;
+  border: none;
+  padding-top: 1rem;
+}
+
+fieldset label {
+  margin-right: 2rem;
 }
 
 /* ====================================================
@@ -95,6 +145,7 @@ main {
 table {
   /* Display & Box Model */
   margin-top: 3rem;
+  width: 80%;
 
   /* Other */
   font-size: 5rem;
@@ -104,7 +155,7 @@ table {
 
 td {
   /* Display & Box Model */
-  height: 10rem;
+  height: 15rem;
   width: 10rem;
 
   /* Other */
