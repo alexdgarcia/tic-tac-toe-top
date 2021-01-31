@@ -226,6 +226,23 @@ const DisplayController = (() => {
     renderBoard();
   };
 
+  const createTable = (gameboard) => {
+    const table = document.querySelector("table");
+  
+    for (let i = 0; i < gameboard.length; i++) {
+      if (i % 3 === 0) {
+        const tableRow = document.createElement("tr");
+        table.appendChild(tableRow);
+         // first you have to create a table row
+         // tds can only be appended to table rows
+      }
+      
+      const tableCell = document.createElement("td");
+      tableCell.setAttribute("id", i);
+      table.lastElementChild.appendChild(tableCell);
+    }
+  };
+
   return {
     renderBoard,
     renderModal,
