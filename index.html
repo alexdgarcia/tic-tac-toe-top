@@ -10,97 +10,67 @@
   </head>
 
   <body>
-    <div class="modal-hiding">
-      <div class="modal-modalContent">
-        <header class="modal-modalHeader">
-          <h2 class="modal-modalHeaderTitle"></h2>
+    <div class="gameOverModal gameOverModal-hiding">
+      <div class="gameOverModal-content">
+        <header class="gameOverModal-header">
+          <h2 class="gameOverModal-title"></h2>
         </header>
-        <div class="modal-modalBody">
+        <div class="gameOverModal-body">
           <div class="button">
             Play Again
           </div>
         </div>
       </div>
     </div>
+
     <main>
-      <header class="board-boardHeader">
-        <h1>Tic Tac Toe</h1>
-        <div class="scoreboard">
-          <div class="scoreboard-playerSelect">
-            <div class="scoreboard-row">
-              <fieldset>
-                <legend>Do you want to play against a:</legend>
-                <input id="human"
-                       name="opponent"
-                       type="radio"
-                       value="human">
-                <label for="human">Human</label>
-                <input id="computer"
-                       name="opponent"
-                       type="radio"
-                       value="computer">
-                <label for="computer">Computer</label>
-              </fieldset>
-            </div>
+      <div class="playerSelect">
+        <header class="playerSelect-header">
+          <h1>Tic Tac Toe</h1>
+        </header>
+        <div class="playerSelect-choices">
+          <div class="playerSelect-row">
+            <fieldset>
+              <legend>Choose your oponent:</legend>
+              <input id="human"
+                     name="opponent"
+                     type="radio"
+                     value="human">
+              <label for="human">Human</label>
+              <input id="computer"
+                     name="opponent"
+                     type="radio"
+                     value="computer">
+              <label for="computer">Computer</label>
+            </fieldset>
           </div>
-          <div class="scoreboard-input scoreboard-input-hiding">
-            <div class="scoreboard-row">
-              <div class="scoreboard-rowContainer">
-                <label class="scoreboard-label"
-                      for="playerOne">
-                      Player One
-                </label>
-                <input id="playerOne"
-                      class="scoreboard-input"
-                      placeholder="Player 1"
-                      type="text">
-              </div>
-              <div class="scoreboard-rowContainer">
-                <label class="scoreboard-label"
-                      for="playerTwo">
-                      Player Two
-                </label>
-                <input id="playerTwo"
-                      class="scoreboard-input"
-                      placeholder="Player 2"
-                      type="text">
-              </div>
+          <div class="playerSelect-input playerSelect-input-hiding">
+            <div class="playerSelect-row">
+              <label for="playerOne">Player One</label>
+              <input id="playerOne"
+                     placeholder="Player 1"
+                     type="text">
+              <label for="playerTwo">Player Two</label>
+              <input id="playerTwo"
+                     placeholder="Player 2"
+                     type="text">
             </div>
             <div class="scoreboard-row">
-              <div class="button">
-                Start Game
-              </div>
-            </div>
-          </div>
-          <div class="scoreboard-active scoreboard-active-hiding">
-            <div class="scoreboard-row">
-              <span class="playerOneName"></span>
-              <span class="playerTwoName"></span>
-            </div>
-            <div class="scoreboard-row">
-              <div class="button">
-                Restart
-              </div>
+              <div class="button">Start Game</div>
             </div>
           </div>
         </div>
-      </header>
+      </div>
+      <div class="scoreboard scoreboard-hiding">
+        <div class="scoreboard-row">
+          <span class="playerOneName"></span>
+          <span class="playerTwoName"></span>
+        </div>
+        <div class="scoreboard-row">
+          <div class="button">Restart</div>
+        </div>
+      </div>
       <table>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-        </tr>
       </table>
     </main>
     <script src="script.js"></script>

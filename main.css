@@ -1,3 +1,6 @@
+/* ====================================================
+ * Global
+ * ==================================================== */
 * {
   margin: 0;
   padding: 0;
@@ -12,12 +15,7 @@
 /* ====================================================
  * Modal
  * ==================================================== */
-
-.modal-hiding {
-  display: none;
-}
-
-.modal-showing {
+ .gameOverModal {
   /* Positioning */
   position: fixed;
 
@@ -32,7 +30,12 @@
   background: hsla(0, 1%, 99%, 0.9);
 }
 
-.modal-modalContent {
+/* Display & Box Model */
+.gameOverModal-hiding {
+  display: none;
+}
+
+.gameOverModal-content {
   /* Display & Box Model */
   width: 50%;
   border-radius: .2rem;
@@ -41,7 +44,7 @@
   background: hsl(0, 10%, 90%);
 }
 
-.modal-modalHeader {
+.gameOverModal-header {
   /* Display & Box Model */
   padding: 1rem;
   border-bottom: 0.1rem dashed black;
