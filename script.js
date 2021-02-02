@@ -34,7 +34,6 @@ const GameBoard = (() => {
   const updateBoard = (i, marker) => {
     board[i] = marker;
     DisplayController.renderMoves();
-    Game.calculateWinner();
   };
 
   const resetBoard = () => {
@@ -89,6 +88,10 @@ const Game = (() => {
     _currentMove = (_currentMove === _players[0]) ? _players[1] :
         _players[0];
 
+    if (calculateWinner()) {
+      return; // this should probably return true, but see if you can clean up the code
+    }
+
     if (_isComputersTurn()) {
       setTimeout(_currentMove.setComputerMove, 500);
     }
@@ -123,12 +126,12 @@ const Game = (() => {
 
       if (GameBoard.board[a] && GameBoard.board[a] === GameBoard.board[b] &&
           GameBoard.board[a] === GameBoard.board[c]) {
-            declareWinner(GameBoard.board[a]);
+            return declareWinner(GameBoard.board[a]);
       }
 
       // if every index has a marker but the above has not executed, it's a draw
       if ( GameBoard.board.every(cell => cell !== '') ) {
-        declareWinner("Draw");
+        return declareWinner("Draw");
       }
 
       return;
@@ -139,6 +142,8 @@ const Game = (() => {
     const text = (marker === "Draw") ? "Game ends in DRAW" :
         (marker === "X") ? "Player 1 wins!" : "Player 2 wins!";
     DisplayController.renderModal(text);
+
+    return true;
   };
 
   return {
@@ -206,7 +211,7 @@ const DisplayController = (() => {
       Game.startGame("Human", "Computer");
     } else {
       _setPlayerNames();
-      Game.startGame(playerOne, playerTwo);
+      Game.startGame(_playerOneName.textContent, _playerTwoName.textContent);
       _toggleInputRow();
     }
 
@@ -299,3 +304,9 @@ const DisplayController = (() => {
 })();
 
 DisplayController.init();
+
+
+// TODO
+// * Computer keeps making moves, even after the winner has been declared
+// * If you start the game against a human, then switch to a computer opponent,
+//   the computer's move logic does not work.
