@@ -2,6 +2,22 @@
 // PlayerFactory
 // =====================================
 const PlayerFactory = (name) => {
+  if (name.toLowerCase() === "computer") {
+    const setComputerMove = () => {
+      const tableCells = document.querySelectorAll("td");
+      let computerMove = Math.floor(Math.random() * tableCells.length);
+
+      while (!Game.validateMove(tableCells[computerMove])) {
+        computerMove = Math.floor(Math.random() * tableCells.length);
+      }
+    };
+
+    return {
+      setComputerMove,
+      name
+    }
+  }
+
   return { name };
 };
 
@@ -51,28 +67,33 @@ const Game = (() => {
     _currentMove = _players[0];
   };
 
-  const validateMove = (event) => {
-    const targetSquare = event.target;
+  const validateMove = (move) => {
+    const targetSquare = move.target || move;
 
-    if (!_isEmptySquare(targetSquare)) {
-      return;
-    }
-
-    _setMove(targetSquare);
+    return _isEmptySquare(targetSquare) && _setMove(targetSquare);
   }
 
   const _isEmptySquare = (targetCell) => {
-    if (targetCell.textContent !== '') {
-      return false;
-    }
+    return (targetCell.textContent !== "") ? false : true;
+  };
 
-    return true;
+  const _isComputersTurn = () => {
+    if (_players[1].name.toLowerCase() === "computer" &&
+          _currentMove.marker.toLowerCase() === "o") {
+      return true;
+    }
   };
 
   const _setMove = (targetCell) => {
     GameBoard.updateBoard(targetCell.id, _currentMove.marker);
     _currentMove = (_currentMove === _players[0]) ? _players[1] :
         _players[0];
+
+    if (_isComputersTurn()) {
+      setTimeout(_currentMove.setComputerMove, 500);
+    }
+
+    return true;
   };
 
   const resetGame = () => {
@@ -259,8 +280,6 @@ const DisplayController = (() => {
       if (i % 3 === 0) {
         const tableRow = document.createElement("tr");
         table.appendChild(tableRow);
-         // first you have to create a table row
-         // tds can only be appended to table rows
       }
 
       const tableCell = document.createElement("td");
