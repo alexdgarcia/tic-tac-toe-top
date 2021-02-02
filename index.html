@@ -24,25 +24,27 @@
     </div>
 
     <main>
-      <div class="playerSelect">
-        <header class="playerSelect-header">
-          <h1>Tic Tac Toe</h1>
-        </header>
-        <div class="playerSelect-choices">
-          <div class="playerSelect-row">
-            <fieldset>
-              <legend>Choose your oponent:</legend>
-              <input id="human"
-                     name="opponent"
-                     type="radio"
-                     value="human">
-              <label for="human">Human</label>
-              <input id="computer"
-                     name="opponent"
-                     type="radio"
-                     value="computer">
-              <label for="computer">Computer</label>
-            </fieldset>
+      <div class="gameboard">
+        <div class="playerSelect">
+          <header class="playerSelect-header">
+            <h1>Tic Tac Toe</h1>
+          </header>
+          <div class="playerSelect-choices">
+            <div class="playerSelect-row">
+              <fieldset>
+                <legend>Choose your opponent:</legend>
+                <input id="human"
+                       name="opponent"
+                       type="radio"
+                       value="human">
+                <label for="human">Human</label>
+                <input id="computer"
+                       name="opponent"
+                       type="radio"
+                       value="computer">
+                <label for="computer">Computer</label>
+              </fieldset>
+            </div>
           </div>
           <div class="playerSelect-input playerSelect-input-hiding">
             <div class="playerSelect-row">
@@ -55,23 +57,23 @@
                      placeholder="Player 2"
                      type="text">
             </div>
-            <div class="scoreboard-row">
+            <div class="playerSelect-row">
               <div class="button">Start Game</div>
             </div>
           </div>
         </div>
-      </div>
-      <div class="scoreboard scoreboard-hiding">
-        <div class="scoreboard-row">
-          <span class="playerOneName"></span>
-          <span class="playerTwoName"></span>
+        <div class="scoreboard scoreboard-hiding">
+          <div class="scoreboard-row">
+            <span class="playerOneName"></span>
+            <span class="playerTwoName"></span>
+          </div>
+          <div class="scoreboard-row">
+            <div class="button">Restart</div>
+          </div>
         </div>
-        <div class="scoreboard-row">
-          <div class="button">Restart</div>
-        </div>
+        <table>
+        </table>
       </div>
-      <table>
-      </table>
     </main>
     <script src="script.js"></script>
   </body>

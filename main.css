@@ -12,6 +12,35 @@
   font-size: 62.5%;
 }
 
+main {
+  /* Display & Box Model */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; */
+  width: 95%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+.button {
+  /* Display & Box Model*/
+  width: 50%;
+  margin: 1rem auto;
+  padding: 1rem;
+  border-radius: .5rem;
+
+  /* Other */
+  background: hsl(200, 50%, 50%);
+  font-size: 1.6rem;
+  color: hsl(0, 1%, 100%);
+  text-align: center;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
 /* ====================================================
  * Modal
  * ==================================================== */
@@ -53,93 +82,82 @@
   text-align: center;
 }
 
-.button {
-  /* Display & Box Model*/
-  width: 50%;
-  margin: 1rem auto;
-  padding: 1rem;
-  border-radius: .5rem;
-
-  /* Other */
-  background: hsl(200, 50%, 50%);
-  font-size: 1.6rem;
-  color: hsl(0, 1%, 100%);
-  text-align: center;
-}
-
-.button:hover {
-  cursor: pointer;
-}
-
-main {
-  /* Display & Box Model */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 95%;
-  height: 100vh;
-  margin: 0 auto;
-
-  border: 1px solid purple;
-}
-
 /* ====================================================
- * Board Header
+ * playerSelect
  * ==================================================== */
-.board-boardHeader {
-  width: 80%;
+ .playerSelect-header {
+  margin-bottom: 3rem;
 }
 
-.board-boardHeader h1 {
+.playerSelect-header h1 {
   text-align: center;
 }
 
-.scoreboard-row {
-  display: flex;
-  justify-content: space-between;
+.playerSelect-choices {
+  border: 1px solid black;
+  border-radius: .5rem;
 }
 
-.scoreboard-rowContainer {
+.playerSelect-choices-hiding {
+  display: none;
+}
+
+.playerSelect-row {
   padding: 1rem;
-}
-
-.scoreboard-label {
-  display: block;
-}
-
-.scoreboard-input {
-  display: block;
-}
-
-.scoreboard-input-hiding {
-  display: none;
-}
-
-.scoreboard-active {
-  display: block;
-}
-
-.scoreboard-active-hiding {
-  display: none;
-}
-
-.scoreboard-playerSelect {
-  display: block;
-}
-
-.scoreboard-playerSelect-hiding {
-  display: none;
 }
 
 fieldset {
-  width: 100%;
   border: none;
-  padding-top: 1rem;
+  padding-top: 2rem;
+}
+
+legend {
+  font-size: 2rem;
 }
 
 fieldset label {
-  margin-right: 2rem;
+  margin-right: 3rem;
+  margin-left: .3rem;
+  font-size: 1.5rem;
+}
+
+.playerSelect-input {
+  border: 1px solid black;
+  border-radius: .5rem;
+}
+
+.playerSelect-input-hiding {
+  display: none;
+}
+
+.playerSelect-input input {
+  width: 100%;
+  height: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border-radius: .3rem;
+  border: 1px solid black;
+}
+
+.playerSelect-input label {
+  font-size: 1.4rem;
+}
+
+.scoreboard-hiding {
+  display: none;
+}
+
+.scoreboard {
+  padding: 1rem;
+  border: 1px solid red;
+}
+
+.scoreboard .scoreboard-row:last-of-type {
+  margin-top: 2rem;
+}
+
+.scoreboard span:last-of-type {
+  float: right;
 }
 
 /* ====================================================
@@ -147,7 +165,7 @@ fieldset label {
  * ==================================================== */
 table {
   /* Display & Box Model */
-  margin-top: 3rem;
+  margin: 3rem auto;
   width: 80%;
 
   /* Other */

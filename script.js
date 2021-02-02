@@ -17,7 +17,7 @@ const GameBoard = (() => {
 
   const updateBoard = (i, marker) => {
     board[i] = marker;
-    DisplayController.renderBoard();
+    DisplayController.renderMoves();
     Game.calculateWinner();
   };
 
@@ -134,79 +134,95 @@ const Game = (() => {
 // DisplayController
 // =====================================
 const DisplayController = (() => {
-  const _scoreboardInput = document.querySelector(".scoreboard-input");
-  const _scoreboardActive = document.querySelector(".scoreboard-active");
-  const _scoreBoardSelect = document.querySelector(".scoreboard-playerSelect");
+  const _humanRadioBtn = document.querySelector("input[value='human']");
+  const _computerRadioBtn = document.querySelector("input[value='computer']");
+  const _startGameBtn = document.querySelector(".playerSelect-input .button");
+  const _playerNameInputDiv = document.querySelector(".playerSelect-input");
+  const _playerSelectChoices = document.querySelector(".playerSelect-choices");
+  const _scoreboard = document.querySelector(".scoreboard");
+  const _restartBtn = document.querySelector(".scoreboard .button");
+  const _gameOverModal = document.querySelector(".gameOverModal");
+  const _playAgainBtn = document.querySelector(".gameOverModal .button");
   const _playerOneName = document.querySelector(".playerOneName");
   const _playerTwoName = document.querySelector(".playerTwoName");
   const _playerOneInput = document.querySelector("#playerOne");
   const _playerTwoInput = document.querySelector("#playerTwo");
-  const _table = Array.from( document.querySelectorAll("td") );
 
   const _bindEvents = () => {
-    document.querySelector("input[value='human']")
-        .addEventListener("change", _toggleInputRow);
-    document.querySelector("input[value='computer']")
-        .addEventListener("change", _startGame);
-    document.querySelector(".scoreboard-input .button")
-        .addEventListener("click", _startGame);
-    document.querySelector(".scoreboard-active .button")
-        .addEventListener("click", Game.resetGame);
-    document.querySelector(".modal-modalBody .button")
-        .addEventListener("click", Game.playAgain);
+    _humanRadioBtn.addEventListener("change", _toggleInputRow);
+    _computerRadioBtn.addEventListener("change", _startGame);
+    _startGameBtn.addEventListener("click", _startGame);
+    _restartBtn.addEventListener("click", Game.resetGame);
+    _playAgainBtn.addEventListener("click", Game.playAgain);
+  };
+
+  const _clearRadioBtns = () => {
+    const radioBtns = document.querySelectorAll("input[type='radio']");
+
+    for (let i = 0; i < radioBtns.length; i++) {
+      radioBtns[i].checked = false;
+    }
+  };
+
+  const _isComputerOpponent = (event) => event.target.value === "computer";
+
+  const _setPlayerNames = (computer) => {
+    if (computer) {
+      _playerOneName.textContent = "Human";
+      _playerTwoName.textContent = "Computer";
+    } else {
+      _playerOneName.textContent = _playerOneInput.value ||
+          _playerOneInput.placeholder;
+      _playerTwoName.textContent = _playerTwoInput.value ||
+          _playerTwoInput.placeholder;
+    }
   };
 
   const _startGame = (event) => {
-    if (event.target.value === "computer") {
-      _playerOneName.textContent = "Human";
-      _playerTwoName.textContent = "Computer";
-
+    if (_isComputerOpponent(event)) {
+      _setPlayerNames(true);
+      _removeInputRow();
       Game.startGame("Human", "Computer");
-      _togglePlayerSelect();
     } else {
-      const playerOne  = (_playerOneInput.value) ? _playerOneInput.value :
-          _playerOneInput.placeholder;
-      const playerTwo = (_playerTwoInput.value) ? _playerTwoInput.value :
-          _playerTwoInput.placeholder;
-
+      _setPlayerNames();
       Game.startGame(playerOne, playerTwo);
-      _playerOneName.textContent = playerOne;
-      _playerTwoName.textContent = playerTwo;
       _toggleInputRow();
     }
 
+    _clearRadioBtns();
     _togglePlayerSelect();
-    _toggleActiveRow();
-    renderBoard();
+    _toggleScoreboard();
+    _createTable(GameBoard.board);
+    renderMoves();
+  };
+
+  const _removeInputRow = () => {
+    _playerNameInputDiv.classList.add("playerSelect-input-hiding");
   };
 
   const _toggleInputRow = () => {
-    _scoreboardInput.classList.toggle("scoreboard-input-hiding");
+    _playerNameInputDiv.classList.toggle("playerSelect-input-hiding");
   };
 
-  const _toggleActiveRow = () => {
-    _scoreboardActive.classList.toggle("scoreboard-active-hiding");
+  const _toggleScoreboard = () => {
+    _scoreboard.classList.toggle("scoreboard-hiding");
   };
 
   const _togglePlayerSelect = () => {
-    _scoreBoardSelect.classList.toggle("scoreboard-playerSelect-hiding");
+    _playerSelectChoices.classList.toggle("playerSelect-choices-hiding");
+  };
+
+  const _toggleModal = () => {
+    _gameOverModal.classList.toggle('gameOverModal-hiding');
   };
 
   const init = () => {
     _bindEvents();
   };
 
-  const renderBoard = () => {
-    _table.forEach((cell, i) => {
-      cell.id = i;
-      cell.textContent = GameBoard.board[i];
-      cell.addEventListener('click', Game.validateMove);
-    });
-  };
-
   const renderModal = (text) => {
-    document.querySelector(".modal-hiding").classList.add('modal-showing');
-    document.querySelector(".modal-modalHeaderTitle").textContent = text;
+    _gameOverModal.querySelector(".gameOverModal-title").textContent = text;
+    _toggleModal();
   };
 
   const _clearInputFields = () => {
@@ -216,19 +232,29 @@ const DisplayController = (() => {
 
   const resetDisplay = () => {
     _clearInputFields();
-    _toggleActiveRow();
-    _toggleInputRow();
-    renderBoard();
+    _toggleScoreboard();
+    _togglePlayerSelect();
   };
 
   const replay = () => {
-    document.querySelector(".modal-hiding").classList.remove('modal-showing');
-    renderBoard();
+    _toggleModal();
+    _createTable(GameBoard.board);
   };
 
-  const createTable = (gameboard) => {
+  const renderMoves = () => {
+    const _table = Array.from( document.querySelectorAll("td") );
+
+    _table.forEach((cell, i) => {
+      cell.id = i;
+      cell.textContent = GameBoard.board[i];
+      cell.addEventListener('click', Game.validateMove);
+    });
+  };
+
+  const _createTable = (gameboard) => {
     const table = document.querySelector("table");
-  
+    table.innerHTML = "";
+
     for (let i = 0; i < gameboard.length; i++) {
       if (i % 3 === 0) {
         const tableRow = document.createElement("tr");
@@ -236,15 +262,16 @@ const DisplayController = (() => {
          // first you have to create a table row
          // tds can only be appended to table rows
       }
-      
+
       const tableCell = document.createElement("td");
-      tableCell.setAttribute("id", i);
       table.lastElementChild.appendChild(tableCell);
     }
+
+    renderMoves();
   };
 
   return {
-    renderBoard,
+    renderMoves,
     renderModal,
     resetDisplay,
     replay,
