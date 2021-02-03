@@ -7,7 +7,7 @@ const PlayerFactory = (name) => {
       const tableCells = document.querySelectorAll("td");
       let computerMove = Math.floor(Math.random() * tableCells.length);
 
-      while (!Game.validateMove(tableCells[computerMove])) {
+      while (!Game.isValidMove(tableCells[computerMove])) {
         computerMove = Math.floor(Math.random() * tableCells.length);
       }
     };
@@ -52,7 +52,7 @@ const GameBoard = (() => {
 // =====================================
 const Game = (() => {
   const players = [];
-  let currentMove = null;
+  let currentMove = "";
 
   const startGame = (...names) => {
     let marker = "X";
@@ -147,7 +147,7 @@ const Game = (() => {
   };
 
   return {
-    validateMove,
+    isValidMove,
     declareWinner,
     calculateWinner,
     resetGame,
@@ -273,7 +273,7 @@ const DisplayController = (() => {
     table.forEach((cell, i) => {
       cell.id = i;
       cell.textContent = GameBoard.board[i];
-      cell.addEventListener('click', Game.validateMove);
+      cell.addEventListener('click', Game.isValidMove);
     });
   };
 
@@ -310,4 +310,4 @@ DisplayController.init();
 // * If you start the game against a human, then switch to a computer opponent,
 //   the computer's move logic does not work. Actually, every time you restart
 //   a game the computer's logic is broken.
-  // if a winner has been declared, setMove returns undefined to validateMove
+  // if a winner has been declared, setMove returns undefined to isValidMove
