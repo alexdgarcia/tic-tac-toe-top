@@ -66,22 +66,7 @@ const Game = (() => {
     currentMove = players[0];
   };
 
-  const isValidMove = (move) => {
-    const targetSquare = move.target || move;
-
-    return isEmptySquare(targetSquare) && setMove(targetSquare);
-  }
-
-  const isEmptySquare = (targetCell) => {
-    return (targetCell.textContent !== "") ? false : true;
-  };
-
-  const isComputersTurn = () => {
-    if (players[1].name.toLowerCase() === "computer" &&
-          currentMove.marker.toLowerCase() === "o") {
-      return true;
-    }
-  };
+  const isEmptySquare = (targetCell) => !targetCell.textContent !== "";
 
   const setMove = (targetCell) => {
     GameBoard.updateBoard(targetCell.id, currentMove.marker);
@@ -97,6 +82,19 @@ const Game = (() => {
     }
 
     return true;
+  };
+
+  const isValidMove = (move) => {
+    const targetSquare = move.target || move;
+
+    return isEmptySquare(targetSquare) && setMove(targetSquare);
+  }
+
+  const isComputersTurn = () => {
+    if (players[1].name.toLowerCase() === "computer" &&
+          currentMove.marker.toLowerCase() === "o") {
+      return true;
+    }
   };
 
   const resetGame = () => {
