@@ -121,25 +121,25 @@ const Game = (() => {
       [2, 4, 6]
     ];
 
-    winningLines.forEach((el) => {
+    const isWin = winningLines.some((el) => {
       const [a, b, c] = el;
 
       if (GameBoard.board[a] && GameBoard.board[a] === GameBoard.board[b] &&
           GameBoard.board[a] === GameBoard.board[c]) {
             return declareWinner(GameBoard.board[a]);
       }
-
-      // if every index has a marker but the above has not executed, it's a draw
-      if ( GameBoard.board.every(cell => cell !== '') ) {
-        return declareWinner("Draw");
-      }
-
-      return;
     });
+
+    const isDraw = () => {
+      return GameBoard.board.every((cell) => cell !== '') &&
+        declareWinner("draw");
+    };
+
+    return isWin || isDraw();
   };
 
   const declareWinner = (marker) => {
-    const text = (marker === "Draw") ? "Game ends in DRAW" :
+    const text = (marker.toLowerCase() === "draw") ? "Game ends in DRAW" :
         (marker === "X") ? "Player 1 wins!" : "Player 2 wins!";
     DisplayController.renderModal(text);
 
@@ -309,4 +309,5 @@ DisplayController.init();
 // TODO
 // * Computer keeps making moves, even after the winner has been declared
 // * If you start the game against a human, then switch to a computer opponent,
-//   the computer's move logic does not work.
+//   the computer's move logic does not work. Actually, every time you restart
+//   a game the computer's logic is broken.
