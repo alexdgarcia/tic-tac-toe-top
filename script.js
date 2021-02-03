@@ -51,49 +51,49 @@ const GameBoard = (() => {
 // Game
 // =====================================
 const Game = (() => {
-  const _players = [];
-  let _currentMove = null;
+  const players = [];
+  let currentMove = null;
 
   const startGame = (...names) => {
     let marker = "X";
 
     names.forEach((name, i) => {
-      _players.push( PlayerFactory(name) );
-      _players[i].marker = marker;
+      players.push( PlayerFactory(name) );
+      players[i].marker = marker;
       marker = (marker === "X") ? "O" : "X";
     });
 
-    _currentMove = _players[0];
+    currentMove = players[0];
   };
 
   const validateMove = (move) => {
     const targetSquare = move.target || move;
 
-    return _isEmptySquare(targetSquare) && _setMove(targetSquare);
+    return isEmptySquare(targetSquare) && setMove(targetSquare);
   }
 
-  const _isEmptySquare = (targetCell) => {
+  const isEmptySquare = (targetCell) => {
     return (targetCell.textContent !== "") ? false : true;
   };
 
-  const _isComputersTurn = () => {
-    if (_players[1].name.toLowerCase() === "computer" &&
-          _currentMove.marker.toLowerCase() === "o") {
+  const isComputersTurn = () => {
+    if (players[1].name.toLowerCase() === "computer" &&
+          currentMove.marker.toLowerCase() === "o") {
       return true;
     }
   };
 
-  const _setMove = (targetCell) => {
-    GameBoard.updateBoard(targetCell.id, _currentMove.marker);
-    _currentMove = (_currentMove === _players[0]) ? _players[1] :
-        _players[0];
+  const setMove = (targetCell) => {
+    GameBoard.updateBoard(targetCell.id, currentMove.marker);
+    currentMove = (currentMove === players[0]) ? players[1] :
+        players[0];
 
     if (calculateWinner()) {
       return; // this should probably return true, but see if you can clean up the code
     }
 
-    if (_isComputersTurn()) {
-      setTimeout(_currentMove.setComputerMove, 500);
+    if (isComputersTurn()) {
+      setTimeout(currentMove.setComputerMove, 500);
     }
 
     return true;
@@ -160,29 +160,29 @@ const Game = (() => {
 // DisplayController
 // =====================================
 const DisplayController = (() => {
-  const _humanRadioBtn = document.querySelector("input[value='human']");
-  const _computerRadioBtn = document.querySelector("input[value='computer']");
-  const _startGameBtn = document.querySelector(".playerSelect-input .button");
-  const _playerNameInputDiv = document.querySelector(".playerSelect-input");
-  const _playerSelectChoices = document.querySelector(".playerSelect-choices");
-  const _scoreboard = document.querySelector(".scoreboard");
-  const _restartBtn = document.querySelector(".scoreboard .button");
-  const _gameOverModal = document.querySelector(".gameOverModal");
-  const _playAgainBtn = document.querySelector(".gameOverModal .button");
-  const _playerOneName = document.querySelector(".playerOneName");
-  const _playerTwoName = document.querySelector(".playerTwoName");
-  const _playerOneInput = document.querySelector("#playerOne");
-  const _playerTwoInput = document.querySelector("#playerTwo");
+  const humanRadioBtn = document.querySelector("input[value='human']");
+  const computerRadioBtn = document.querySelector("input[value='computer']");
+  const startGameBtn = document.querySelector(".playerSelect-input .button");
+  const playerNameInputDiv = document.querySelector(".playerSelect-input");
+  const playerSelectChoices = document.querySelector(".playerSelect-choices");
+  const scoreboard = document.querySelector(".scoreboard");
+  const restartBtn = document.querySelector(".scoreboard .button");
+  const gameOverModal = document.querySelector(".gameOverModal");
+  const playAgainBtn = document.querySelector(".gameOverModal .button");
+  const playerOneName = document.querySelector(".playerOneName");
+  const playerTwoName = document.querySelector(".playerTwoName");
+  const playerOneInput = document.querySelector("#playerOne");
+  const playerTwoInput = document.querySelector("#playerTwo");
 
-  const _bindEvents = () => {
-    _humanRadioBtn.addEventListener("change", _toggleInputRow);
-    _computerRadioBtn.addEventListener("change", _startGame);
-    _startGameBtn.addEventListener("click", _startGame);
-    _restartBtn.addEventListener("click", Game.resetGame);
-    _playAgainBtn.addEventListener("click", Game.playAgain);
+  const bindEvents = () => {
+    humanRadioBtn.addEventListener("change", toggleInputRow);
+    computerRadioBtn.addEventListener("change", startGame);
+    startGameBtn.addEventListener("click", startGame);
+    restartBtn.addEventListener("click", Game.resetGame);
+    playAgainBtn.addEventListener("click", Game.playAgain);
   };
 
-  const _clearRadioBtns = () => {
+  const clearRadioBtns = () => {
     const radioBtns = document.querySelectorAll("input[type='radio']");
 
     for (let i = 0; i < radioBtns.length; i++) {
@@ -190,94 +190,94 @@ const DisplayController = (() => {
     }
   };
 
-  const _isComputerOpponent = (event) => event.target.value === "computer";
+  const isComputerOpponent = (event) => event.target.value === "computer";
 
-  const _setPlayerNames = (computer) => {
+  const setPlayerNames = (computer) => {
     if (computer) {
-      _playerOneName.textContent = "Human";
-      _playerTwoName.textContent = "Computer";
+      playerOneName.textContent = "Human";
+      playerTwoName.textContent = "Computer";
     } else {
-      _playerOneName.textContent = _playerOneInput.value ||
-          _playerOneInput.placeholder;
-      _playerTwoName.textContent = _playerTwoInput.value ||
-          _playerTwoInput.placeholder;
+      playerOneName.textContent = playerOneInput.value ||
+          playerOneInput.placeholder;
+      playerTwoName.textContent = playerTwoInput.value ||
+          playerTwoInput.placeholder;
     }
   };
 
-  const _startGame = (event) => {
-    if (_isComputerOpponent(event)) {
-      _setPlayerNames(true);
-      _removeInputRow();
+  const startGame = (event) => {
+    if (isComputerOpponent(event)) {
+      setPlayerNames(true);
+      removeInputRow();
       Game.startGame("Human", "Computer");
     } else {
-      _setPlayerNames();
-      Game.startGame(_playerOneName.textContent, _playerTwoName.textContent);
-      _toggleInputRow();
+      setPlayerNames();
+      Game.startGame(playerOneName.textContent, playerTwoName.textContent);
+      toggleInputRow();
     }
 
-    _clearRadioBtns();
-    _togglePlayerSelect();
-    _toggleScoreboard();
-    _createTable(GameBoard.board);
+    clearRadioBtns();
+    togglePlayerSelect();
+    toggleScoreboard();
+    createTable(GameBoard.board);
     renderMoves();
   };
 
-  const _removeInputRow = () => {
-    _playerNameInputDiv.classList.add("playerSelect-input-hiding");
+  const removeInputRow = () => {
+    playerNameInputDiv.classList.add("playerSelect-input-hiding");
   };
 
-  const _toggleInputRow = () => {
-    _playerNameInputDiv.classList.toggle("playerSelect-input-hiding");
+  const toggleInputRow = () => {
+    playerNameInputDiv.classList.toggle("playerSelect-input-hiding");
   };
 
-  const _toggleScoreboard = () => {
-    _scoreboard.classList.toggle("scoreboard-hiding");
+  const toggleScoreboard = () => {
+    scoreboard.classList.toggle("scoreboard-hiding");
   };
 
-  const _togglePlayerSelect = () => {
-    _playerSelectChoices.classList.toggle("playerSelect-choices-hiding");
+  const togglePlayerSelect = () => {
+    playerSelectChoices.classList.toggle("playerSelect-choices-hiding");
   };
 
-  const _toggleModal = () => {
-    _gameOverModal.classList.toggle('gameOverModal-hiding');
+  const toggleModal = () => {
+    gameOverModal.classList.toggle('gameOverModal-hiding');
   };
 
   const init = () => {
-    _bindEvents();
+    bindEvents();
   };
 
   const renderModal = (text) => {
-    _gameOverModal.querySelector(".gameOverModal-title").textContent = text;
-    _toggleModal();
+    gameOverModal.querySelector(".gameOverModal-title").textContent = text;
+    toggleModal();
   };
 
-  const _clearInputFields = () => {
-    _playerOneInput.value = '';
-    _playerTwoInput.value = '';
+  const clearInputFields = () => {
+    playerOneInput.value = '';
+    playerTwoInput.value = '';
   };
 
   const resetDisplay = () => {
-    _clearInputFields();
-    _toggleScoreboard();
-    _togglePlayerSelect();
+    clearInputFields();
+    toggleScoreboard();
+    togglePlayerSelect();
   };
 
   const replay = () => {
-    _toggleModal();
-    _createTable(GameBoard.board);
+    toggleModal();
+    createTable(GameBoard.board);
   };
 
   const renderMoves = () => {
-    const _table = Array.from( document.querySelectorAll("td") );
+    const table = Array.from( document.querySelectorAll("td") );
 
-    _table.forEach((cell, i) => {
+    table.forEach((cell, i) => {
       cell.id = i;
       cell.textContent = GameBoard.board[i];
       cell.addEventListener('click', Game.validateMove);
     });
   };
 
-  const _createTable = (gameboard) => {
+  const createTable = (gameboard) => {
     const table = document.querySelector("table");
     table.innerHTML = "";
 
@@ -307,7 +307,6 @@ DisplayController.init();
 
 
 // TODO
-// * Computer keeps making moves, even after the winner has been declared
 // * If you start the game against a human, then switch to a computer opponent,
 //   the computer's move logic does not work. Actually, every time you restart
 //   a game the computer's logic is broken.
