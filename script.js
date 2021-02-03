@@ -66,7 +66,7 @@ const Game = (() => {
     currentMove = players[0];
   };
 
-  const validateMove = (move) => {
+  const isValidMove = (move) => {
     const targetSquare = move.target || move;
 
     return isEmptySquare(targetSquare) && setMove(targetSquare);
@@ -89,7 +89,7 @@ const Game = (() => {
         players[0];
 
     if (calculateWinner()) {
-      return; // this should probably return true, but see if you can clean up the code
+      return;
     }
 
     if (isComputersTurn()) {
@@ -310,3 +310,4 @@ DisplayController.init();
 // * If you start the game against a human, then switch to a computer opponent,
 //   the computer's move logic does not work. Actually, every time you restart
 //   a game the computer's logic is broken.
+  // if a winner has been declared, setMove returns undefined to validateMove
