@@ -75,7 +75,7 @@ const Game = (() => {
         players[0];
 
     if (calculateWinner()) {
-      return;
+      return true;
     }
 
     if (isComputersTurn()) {
