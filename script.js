@@ -67,7 +67,7 @@ const Game = (() => {
     currentMove = players[0];
   };
 
-  const isEmptySquare = (targetCell) => !targetCell.textContent !== "";
+  const isEmptySquare = (targetCell) => !(targetCell.textContent !== "");
 
   const setMove = (targetCell) => {
     GameBoard.updateBoard(targetCell.id, currentMove.marker);
@@ -306,6 +306,7 @@ DisplayController.init();
 
 
 // TODO
+// Non-empty square are capable of being played in.
 // * Computer logic is completely broken.
 // * If you start the game against a human, then switch to a computer opponent,
 //   the computer's move logic does not work. Actually, every time you restart
