@@ -5,10 +5,11 @@ const PlayerFactory = (name) => {
   if (name.toLowerCase() === "computer") {
     const setComputerMove = () => {
       const tableCells = document.querySelectorAll("td");
-      let computerMove = Math.floor(Math.random() * tableCells.length);
+      const getRandomMove = () => Math.floor(Math.random() * tableCells.length);
+      let computerMove = getRandomMove();
 
       while (!Game.isValidMove(tableCells[computerMove])) {
-        computerMove = Math.floor(Math.random() * tableCells.length);
+        computerMove = getRandomMove();
       }
     };
 
@@ -305,7 +306,10 @@ DisplayController.init();
 
 
 // TODO
+// * Computer logic is completely broken.
 // * If you start the game against a human, then switch to a computer opponent,
 //   the computer's move logic does not work. Actually, every time you restart
 //   a game the computer's logic is broken.
   // if a winner has been declared, setMove returns undefined to isValidMove
+// * when clicking human, then computer before starting the game, the computer
+//   logic breaks.
