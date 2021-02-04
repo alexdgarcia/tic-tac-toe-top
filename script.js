@@ -106,6 +106,7 @@ const Game = (() => {
   const playAgain = () => {
     GameBoard.resetBoard();
     DisplayController.replay();
+    currentMove = players[0];
   }
 
   const calculateWinner = () => {
@@ -306,11 +307,12 @@ DisplayController.init();
 
 
 // TODO
-// Non-empty square are capable of being played in.
+// When the game is restarted, the player moves alternate and "O" plays
+// first, but the computer will not go first. It only goes after an X.
 // * Computer logic is completely broken.
 // * If you start the game against a human, then switch to a computer opponent,
 //   the computer's move logic does not work. Actually, every time you restart
 //   a game the computer's logic is broken.
   // if a winner has been declared, setMove returns undefined to isValidMove
-// * when clicking human, then computer before starting the game, the computer
-//   logic breaks.
+// If there is one move left to be made and the computer has to make
+// it, the app crashes.
