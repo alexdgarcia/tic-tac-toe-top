@@ -304,15 +304,3 @@ const DisplayController = (() => {
 })();
 
 DisplayController.init();
-
-
-// TODO
-// When the game is restarted, the player moves alternate and "O" plays
-// first, but the computer will not go first. It only goes after an X.
-// * Computer logic is completely broken.
-// * If you start the game against a human, then switch to a computer opponent,
-//   the computer's move logic does not work. Actually, every time you restart
-//   a game the computer's logic is broken.
-  // if a winner has been declared, setMove returns undefined to isValidMove
-// If there is one move left to be made and the computer has to make
-// it, the app crashes.
