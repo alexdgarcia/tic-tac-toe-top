@@ -17,7 +17,6 @@ const PlayerFactory = (name) => {
     // RECURSIVE LOGIC:
     const setComputerMoveRecursive = () => {
       const syntheticBoard = Array.from(GameBoard.board);
-      const moveHistory = {};
 
       const findBestMove = (board, isMinimizing, depth) => {
         // Base case
@@ -33,10 +32,12 @@ const PlayerFactory = (name) => {
         // Recursive logic
           // if minimizing
         if (isMinimizing) {
+          const moveHistory = {};
           console.log("minimizing");
         }
           // if maximizing
         if (!isMinimizing) {
+          const moveHistory = {};
           console.log("maximizing");
         }
       };
@@ -121,8 +122,8 @@ const Game = (() => {
     }
 
     if (isComputersTurn()) {
-      setTimeout(currentMove.setComputerMove, 500);
-      // setTimeout(currentMove.setComputerMoveRecursive, 500);
+      // setTimeout(currentMove.setComputerMove, 500);
+      setTimeout(currentMove.setComputerMoveRecursive, 500);
     }
 
     return true;
@@ -194,6 +195,7 @@ const Game = (() => {
     isValidMove,
     declareWinner,
     calculateWinner,
+    isDraw,
     resetGame,
     startGame,
     playAgain
