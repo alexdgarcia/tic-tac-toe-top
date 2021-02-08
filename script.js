@@ -3,6 +3,7 @@
 // =====================================
 const PlayerFactory = (name) => {
   if (name.toLowerCase() === "computer") {
+    // RANDOM MOVE LOGIC:
     const setComputerMove = () => {
       const tableCells = document.querySelectorAll("td");
       const getRandomMove = () => Math.floor(Math.random() * tableCells.length);
@@ -13,8 +14,49 @@ const PlayerFactory = (name) => {
       }
     };
 
+    // RECURSIVE LOGIC:
+    const setComputerMoveRecursive = () => {
+      const syntheticBoard = Array.from(GameBoard.board);
+      const moveHistory = {};
+
+      const findBestMove = (board, isMinimizing, depth) => {
+        // Base case
+        // someone won the game, or the game is a draw
+        // score should be calculated and returned
+        if (Game.calculateWinner(syntheticBoard) ||
+            Game.isDraw(syntheticBoard)) {
+          return;
+        }
+
+        const possibleMoves = getPossibleMoves();
+
+        // Recursive logic
+          // if minimizing
+        if (isMinimizing) {
+          console.log("minimizing");
+        }
+          // if maximizing
+        if (!isMinimizing) {
+          console.log("maximizing");
+        }
+      };
+
+      // Helper Method to find open plays:
+      const getPossibleMoves = () => {
+        let indexArray = [];
+        syntheticBoard.forEach((el, i) => {
+          if (el === "") indexArray.push(i);
+        });
+
+        return indexArray;
+      };
+
+      findBestMove(syntheticBoard, true, 0)
+    };
+
     return {
       setComputerMove,
+      setComputerMoveRecursive,
       name
     }
   }
@@ -74,12 +116,13 @@ const Game = (() => {
     currentMove = (currentMove === players[0]) ? players[1] :
         players[0];
 
-    if (calculateWinner()) {
+    if (calculateWinner() || isDraw()) {
       return true;
     }
 
     if (isComputersTurn()) {
       setTimeout(currentMove.setComputerMove, 500);
+      // setTimeout(currentMove.setComputerMoveRecursive, 500);
     }
 
     return true;
@@ -109,7 +152,7 @@ const Game = (() => {
     currentMove = players[0];
   }
 
-  const calculateWinner = () => {
+  const calculateWinner = (board = GameBoard.board) => {
     const winningLines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -124,18 +167,19 @@ const Game = (() => {
     const isWin = winningLines.some((el) => {
       const [a, b, c] = el;
 
-      if (GameBoard.board[a] && GameBoard.board[a] === GameBoard.board[b] &&
-          GameBoard.board[a] === GameBoard.board[c]) {
-            return declareWinner(GameBoard.board[a]);
+      if (board[a] && board[a] === board[b] &&
+          board[a] === board[c]) {
+            return declareWinner(board[a]);
       }
     });
 
-    const isDraw = () => {
-      return GameBoard.board.every((cell) => cell !== '') &&
-        declareWinner("draw");
-    };
+    return isWin;
+  };
 
-    return isWin || isDraw();
+  const isDraw = (board = GameBoard.board) => {
+    if (board.every((cell) => cell !== '')) {
+      return declareWinner("draw");
+    }
   };
 
   const declareWinner = (marker) => {
@@ -304,3 +348,7 @@ const DisplayController = (() => {
 })();
 
 DisplayController.init();
+
+// TODO
+  // When I choose to play a game against a human, the computer still plays,
+  // but it seems to only happen when a previous game starts against a computer.
