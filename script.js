@@ -33,12 +33,20 @@ const PlayerFactory = (name) => {
           // if minimizing
         if (isMinimizing) {
           const moveHistory = {};
-          console.log("minimizing");
+
+          possibleMoves.forEach(cell => {
+            GameBoard.updateBoard(syntheticBoard, cell, "O");
+            findBestMove(syntheticBoard, false, 0);
+          });
         }
           // if maximizing
         if (!isMinimizing) {
           const moveHistory = {};
-          console.log("maximizing");
+
+          possibleMoves.forEach(cell => {
+            GameBoard.updateBoard(syntheticBoard, cell, "X");
+            findBestMove(syntheticBoard, true, 0);
+          });
         }
       };
 
@@ -123,8 +131,8 @@ const Game = (() => {
     }
 
     if (isComputersTurn()) {
-      setTimeout(currentMove.setComputerMove, 500);
-      // setTimeout(currentMove.setComputerMoveRecursive, 500);
+      // setTimeout(currentMove.setComputerMove, 500);
+      setTimeout(currentMove.setComputerMoveRecursive, 500);
     }
 
     return true;
@@ -155,6 +163,7 @@ const Game = (() => {
   }
 
   const calculateWinner = (board = GameBoard.board) => {
+    const winDetails = {};
     const winningLines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -171,11 +180,13 @@ const Game = (() => {
 
       if (board[a] && board[a] === board[b] &&
           board[a] === board[c]) {
+            winDetails.marker = board[a];
+            winDetails.terminal = true;
             return declareWinner(board[a]);
       }
     });
 
-    return isWin;
+    return isWin && winDetails;
   };
 
   const isDraw = (board = GameBoard.board) => {
