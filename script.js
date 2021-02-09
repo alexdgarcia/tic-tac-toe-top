@@ -75,9 +75,8 @@ const GameBoard = (() => {
     '', '', ''
   ];
 
-  const updateBoard = (i, marker) => {
+  const updateBoard = (board, i, marker) => {
     board[i] = marker;
-    DisplayController.renderMoves();
   };
 
   const resetBoard = () => {
@@ -113,17 +112,19 @@ const Game = (() => {
   const isEmptySquare = (targetCell) => !(targetCell.textContent !== "");
 
   const setMove = (targetCell) => {
-    GameBoard.updateBoard(targetCell.id, currentMove.marker);
+    GameBoard.updateBoard(GameBoard.board, targetCell.id, currentMove.marker);
     currentMove = (currentMove === players[0]) ? players[1] :
         players[0];
+
+    DisplayController.renderMoves();
 
     if (calculateWinner() || isDraw()) {
       return true;
     }
 
     if (isComputersTurn()) {
-      // setTimeout(currentMove.setComputerMove, 500);
-      setTimeout(currentMove.setComputerMoveRecursive, 500);
+      setTimeout(currentMove.setComputerMove, 500);
+      // setTimeout(currentMove.setComputerMoveRecursive, 500);
     }
 
     return true;
