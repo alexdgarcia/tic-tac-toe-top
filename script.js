@@ -126,13 +126,13 @@ const Game = (() => {
 
     DisplayController.renderMoves();
 
-    if (calculateWinner() || isDraw()) {
+    if (calculateWinner().terminal || isDraw()) {
       return true;
     }
 
     if (isComputersTurn()) {
-      // setTimeout(currentMove.setComputerMove, 500);
-      setTimeout(currentMove.setComputerMoveRecursive, 500);
+      setTimeout(currentMove.setComputerMove, 500);
+      // setTimeout(currentMove.setComputerMoveRecursive, 500);
     }
 
     return true;
@@ -175,7 +175,7 @@ const Game = (() => {
       [2, 4, 6]
     ];
 
-    const isWin = winningLines.some((el) => {
+    winningLines.some((el) => {
       const [a, b, c] = el;
 
       if (board[a] && board[a] === board[b] &&
@@ -186,7 +186,7 @@ const Game = (() => {
       }
     });
 
-    return isWin && winDetails;
+    return winDetails;
   };
 
   const isDraw = (board = GameBoard.board) => {
